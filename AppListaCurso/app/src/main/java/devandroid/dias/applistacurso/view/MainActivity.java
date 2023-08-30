@@ -20,7 +20,6 @@ import devandroid.dias.applistacurso.model.Pessoa;
 
 public class MainActivity extends AppCompatActivity {
     Pessoa pessoa;
-    Pessoa outraPessoa;
     EditText editPrimeiroNome;
     EditText editSobreNome;
     EditText editNomeCurso;
@@ -31,31 +30,25 @@ public class MainActivity extends AppCompatActivity {
 
     PessoaController pessoaController;
 
-    //Adicionado SharedPreferences
     SharedPreferences preferences;
     public static final String NOME_PREFERENCES = "pref_lista_vip";
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        //Instanciado SharedPreferences
         preferences = getSharedPreferences(NOME_PREFERENCES, 0);
         SharedPreferences.Editor listaVip = preferences.edit();
 
         pessoa = new Pessoa();
-
-        outraPessoa = new Pessoa();
+        pessoa.setPrimeiroNome(preferences.getString("PrimeiroNome", ""));
+        pessoa.setSobreNome(preferences.getString("Sobrenome", ""));
+        pessoa.setCursoDesejado(preferences.getString("CursoDesejado", ""));
+        pessoa.setTelefoneContato(preferences.getString("TelefoneContato", ""));
 
         pessoaController = new PessoaController();
         pessoaController.toString();
-
-        outraPessoa.setPrimeiroNome("Fábio");
-        outraPessoa.setSobreNome("Medeiros");
-        outraPessoa.setCursoDesejado("Java");
-        outraPessoa.setTelefoneContato("11-9445-9090");
 
         editPrimeiroNome = findViewById(R.id.editPrimeiroNome);
         editSobreNome = findViewById(R.id.editSobreNome);
@@ -110,7 +103,6 @@ public class MainActivity extends AppCompatActivity {
 
         Log.i("POOAndroid", pessoa.toString());
 
-        Log.i("POOAndroid", outraPessoa.toString());
 
     }
 }
