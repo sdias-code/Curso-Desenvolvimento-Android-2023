@@ -31,25 +31,21 @@ public class MainActivity extends AppCompatActivity {
 
     PessoaController pessoaController;
 
-    SharedPreferences preferences;
-    public static final String NOME_PREFERENCES = "pref_lista_vip";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        preferences = getSharedPreferences(NOME_PREFERENCES, 0);
-        listaVip = preferences.edit();
+
+
+
+        pessoaController = new PessoaController(MainActivity.this);
+        pessoaController.toString();
 
         pessoa = new Pessoa();
-        pessoa.setPrimeiroNome(preferences.getString("PrimeiroNome", ""));
-        pessoa.setSobreNome(preferences.getString("Sobrenome", ""));
-        pessoa.setCursoDesejado(preferences.getString("CursoDesejado", ""));
-        pessoa.setTelefoneContato(preferences.getString("TelefoneContato", ""));
-
-        pessoaController = new PessoaController();
-        pessoaController.toString();
+        pessoaController.buscarDados(pessoa);
 
         editPrimeiroNome = findViewById(R.id.editPrimeiroNome);
         editSobreNome = findViewById(R.id.editSobreNome);
@@ -73,8 +69,9 @@ public class MainActivity extends AppCompatActivity {
                 editNomeCurso.setText("");
                 editTelefoneContato.setText("");
 
-                listaVip.clear();
-                listaVip.apply();
+                pessoaController.limparDados();
+
+
             }
         });
 
@@ -97,11 +94,6 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(MainActivity.this, "Salvo " + pessoa.toString(), Toast.LENGTH_LONG).show();
                 pessoaController.salvar(pessoa);
 
-                listaVip.putString("PrimeiroNome", pessoa.getPrimeiroNome());
-                listaVip.putString("Sobrenome", pessoa.getSobreNome());
-                listaVip.putString("CursoDesejado", pessoa.getCursoDesejado());
-                listaVip.putString("TelefoneContato", pessoa.getTelefoneContato());
-                listaVip.apply();
             }
         });
 
