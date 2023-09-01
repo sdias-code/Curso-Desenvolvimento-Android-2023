@@ -1,6 +1,5 @@
 package devandroid.dias.applistacurso.view;
 
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.SharedPreferences;
@@ -11,15 +10,16 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import java.util.Map;
-import java.util.Set;
+import java.util.List;
 
 import devandroid.dias.applistacurso.R;
+import devandroid.dias.applistacurso.controller.CursoController;
 import devandroid.dias.applistacurso.controller.PessoaController;
+import devandroid.dias.applistacurso.model.Curso;
 import devandroid.dias.applistacurso.model.Pessoa;
 
 public class MainActivity extends AppCompatActivity {
-    Pessoa pessoa;
+
     EditText editPrimeiroNome;
     EditText editSobreNome;
     EditText editNomeCurso;
@@ -28,21 +28,21 @@ public class MainActivity extends AppCompatActivity {
     Button btnLimpar;
     Button btnSalvar;
     Button btnFinalizar;
-
+    Pessoa pessoa;
     PessoaController pessoaController;
-
-
+    CursoController cursoController;
+    List<Curso> listaDeCursos;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
-
-
         pessoaController = new PessoaController(MainActivity.this);
         pessoaController.toString();
+
+        cursoController = new CursoController();
+        listaDeCursos = cursoController.getListaDeCursos();
 
         pessoa = new Pessoa();
         pessoaController.buscarDados(pessoa);
